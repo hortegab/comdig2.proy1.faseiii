@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.7.13'?>
+<?grc format='1' created='3.7.11'?>
 <flow_graph>
   <timestamp>Sun Apr 14 11:30:57 2019</timestamp>
   <block>
@@ -73,20 +73,12 @@
       <value>run_stop</value>
     </param>
     <param>
-      <key>sizing_mode</key>
-      <value>fixed</value>
-    </param>
-    <param>
       <key>thread_safe_setters</key>
       <value></value>
     </param>
     <param>
       <key>title</key>
       <value></value>
-    </param>
-    <param>
-      <key>placement</key>
-      <value>(0,0)</value>
     </param>
   </block>
   <block>
@@ -376,7 +368,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>e_usrp_samp.usrp2920(B)</value>
+      <value>int(e_usrp_samp.usrp2920(B))</value>
     </param>
   </block>
   <block>
@@ -403,7 +395,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>BWaudio*2</value>
+      <value>int(BWaudio*2)</value>
     </param>
   </block>
   <block>
@@ -509,7 +501,7 @@
     </param>
     <param>
       <key>samp_rate</key>
-      <value>samp_rate</value>
+      <value>samp_rate_audio</value>
     </param>
     <param>
       <key>waveform</key>
@@ -527,28 +519,20 @@
       <value></value>
     </param>
     <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
       <key>_enabled</key>
       <value>True</value>
+    </param>
+    <param>
+      <key>Ensayos</key>
+      <value>1000000</value>
     </param>
     <param>
       <key>Fc</key>
       <value>0</value>
     </param>
     <param>
-      <key>samp_rate_audio</key>
-      <value>samp_rate</value>
-    </param>
-    <param>
       <key>_coordinate</key>
       <value>(424, 852)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value></value>
     </param>
     <param>
       <key>_rotation</key>
@@ -563,16 +547,24 @@
       <value>1024</value>
     </param>
     <param>
-      <key>Ensayos</key>
-      <value>1000000</value>
-    </param>
-    <param>
       <key>Titulo</key>
       <value>"PSD"</value>
     </param>
     <param>
       <key>Ymax</key>
       <value>6e-6</value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>gui_hint</key>
+      <value></value>
+    </param>
+    <param>
+      <key>samp_rate_audio</key>
+      <value>samp_rate</value>
     </param>
   </block>
   <block>
@@ -703,11 +695,13 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
       <value>import math
 
 # calculo de la frecuencia de muestreo para el USRP2920
+# Hay un error introducido a propósito para que sea corregido por los estudiantes
+
 def usrp2920(B):
 	Kdmax=512
 	samp_rate_usrp_rx=100e6
 	Kdd=int(samp_rate_usrp_rx/B)
-	Kda=pow(2,int(math.log(Kdd,2)))
+	Kda=pow(2,int(math.log(Kdd,10)))
 	Kd=min(Kda,Kdmax)
 	return samp_rate_usrp_rx/Kd
 	
